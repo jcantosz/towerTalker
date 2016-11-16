@@ -57,7 +57,6 @@ function getToken(callback){
  * Handle GET requests
 **/
 function getRespond(req, res, callback){
-    console.log(res.body);
     var i, body, results;
     try{
         body = JSON.parse(res.body);
@@ -258,9 +257,7 @@ function createJobTemplate(callback){
 
 function runJobTemplate(callback){
     console.log("Run Job Template");
-    var run_job_request = request_content;
-    run_job_request['json'] = {};
-    request.post(server + '/jobs_template/' + content.job_template.id + '/launch/', run_job_request, function(req, res){
+    request.post(server + '/job_templates/' + content.job_template.id + '/launch/', request_content, function(req, res){
         var i,
             body = res.body;
         if(res.statusCode != 201){
@@ -270,6 +267,7 @@ function runJobTemplate(callback){
         callback();
     });
 }
+
 
 async.series([
     getToken,
