@@ -1,0 +1,20 @@
+{
+  "name": "tower-talker",
+  "version": "1.0.0",
+  "description": "Talk to (ansible) tower to create (if needed) and run a job",
+  "main": "talk.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node talk.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.ibm.com:jobgate/towerTalker.git"
+  },
+  "author": "Jesse Antoszyk <jcantosz@us.ibm.com>",
+  "license": "MIT",
+  "dependencies": {
+    "async": "^2.1.2",
+    "request": "^2.78.0"
+  }
+}
