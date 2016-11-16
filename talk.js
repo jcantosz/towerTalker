@@ -256,30 +256,11 @@ function createJobTemplate(callback){
     }
 }
 
-function runJob(callback){
-    console.log("Run Job");
+function runJobTemplate(callback){
+    console.log("Run Job Template");
     var run_job_request = request_content;
-    run_job_request['json'] = {
-        "name": content.job_template.name,
-        "description": "",
-        "job_type": "run",
-        "inventory": content.inventory.id,
-        "project": content.project.id,
-        "playbook": content.job_template.playbook,
-        "credential": content.credential.id,
-        "cloud_credential": null,
-        "network_credential": null,
-        "forks": 0,
-        "limit": "",
-        "verbosity": 0,
-        "extra_vars": "",
-        "job_tags": "",
-        "force_handlers": false,
-        "skip_tags": "",
-        "start_at_task": "",
-        "job_template": content.job_template.id
-    };
-    request.post(server + '/jobs/', run_job_request, function(req, res){
+    run_job_request['json'] = {};
+    request.post(server + '/jobs_template/' + content.job_template.id + '/launch/', run_job_request, function(req, res){
         var i,
             body = res.body;
         if(res.statusCode != 201){
@@ -289,7 +270,6 @@ function runJob(callback){
         callback();
     });
 }
-
 
 async.series([
     getToken,
@@ -302,7 +282,7 @@ async.series([
     createCredential,
     getJobTemplate,
     createJobTemplate,
-    runJob
+    runJobTemplate
 ], function(err){
     if(err){
         console.log("Error: " + JSON.stringify(err));
