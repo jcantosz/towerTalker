@@ -278,11 +278,10 @@ function modifyExtraVars(callback){
 function runJobTemplate(callback){
     console.log("Run Job Template");
     var added_extra = JSON.stringify({
-        "gh_user": ENV.GH_USER,
-        "gh_token": ENV.GH_TOKEN,
-        "gh_owner": ENV.GH_OWNER,
-        "gh_owner": ENV.GH_REPO,
-        "gh_pr_num": ENV.GH_PR_NUM
+        "gh_user": ENV.GITHUB_USER,
+        "gh_token": ENV.GITHUB_TOKEN,
+        "gh_slug": ENV.TRAVIS_REPO_SLUG,
+        "gh_pr_num": ENV.TRAVIS_PULL_REQUEST
     });
     request_content["json"] = {"extra_vars": added_extra};
     request.post(server + '/job_templates/' + content.job_template.id + '/launch/', request_content, function(req, res){
