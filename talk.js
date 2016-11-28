@@ -255,8 +255,36 @@ function createJobTemplate(callback){
     }
 }
 
+/**
+function modifyExtraVars(callback){
+    request.get(server + '/job_templates/?name=' + content.job_template.name, request_content, (req, res) => {
+        var resp = res.results;
+        var extra = resp.extra_vars;
+        var added_extra = extra
+            + "\ngh_user: " + ENV.GH_USER
+            + "\ngh_token: " + ENV.GH_TOKEN
+            + "\ngh_owner: " + ENV.GH_OWNER
+            + "\ngh_owner: " + ENV.GH_REPO
+            + "\ngh_pr_num: " + ENV.GH_PR_NUM;
+        callback();
+    });
+
+}
+**/
+
+/**
+ * Job template extra variables must be "prompt on launch" to work
+**/
 function runJobTemplate(callback){
     console.log("Run Job Template");
+    var added_extra = JSON.stringify({
+        "gh_user": ENV.GH_USER,
+        "gh_token": ENV.GH_TOKEN,
+        "gh_owner": ENV.GH_OWNER,
+        "gh_owner": ENV.GH_REPO,
+        "gh_pr_num": ENV.GH_PR_NUM
+    });
+    request_content["json"] = {"extra_vars": added_extra};
     request.post(server + '/job_templates/' + content.job_template.id + '/launch/', request_content, function(req, res){
         var i,
             body = res.body;
